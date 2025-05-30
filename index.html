@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vistoria GZL</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Substitua pelo seu logo GZL -->
+    <img src="img/GZL - Logos_pages-to-jpg-0001.jpg" alt="GZL Logo" class="logo">
+    
+    <h2>Formulário de Vistoria</h2>
+    
+    <form id="vistoriaForm">
+        <div class="form-group">
+            <label for="unidade">Unidade:</label>
+            <select id="unidade" required>
+                <option value="" disabled selected>Selecione uma unidade</option>
+                <option value="Suzano Fábrica Limeira">Suzano Fábrica Limeira</option>
+                <option value="CD Suzano Americana">CD Suzano Americana</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="numeroDT">Número da DT:</label>
+            <input type="text" id="numeroDT" pattern="\d*" title="Apenas números são permitidos" required>
+        </div>
+        
+        <button type="submit">Salvar</button>
+    </form>
+    
+    <div id="message" class="success-message"></div>
+    <script src="js/app.js"></script>
+</body>
+</html>
