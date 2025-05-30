@@ -1,5 +1,5 @@
 // Verificação de ambiente permitido
-const allowedHosts = ['github.io', '127.0.0.1', 'localhost'];
+const allowedHosts = ['github.io'];
 const isAllowedHost = allowedHosts.some(host => window.location.hostname.endsWith(host));
 
 if (!isAllowedHost) {
