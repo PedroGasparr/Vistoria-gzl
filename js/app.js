@@ -1,5 +1,4 @@
-// Verificação de ambiente permitido
-const allowedHosts = ['github.io'];
+const allowedHosts = ['github.io' && '127.0.0.1'];
 const isAllowedHost = allowedHosts.some(host => window.location.hostname.endsWith(host));
 
 if (!isAllowedHost) {
@@ -8,7 +7,7 @@ if (!isAllowedHost) {
     throw new Error('Host não autorizado');
 }
 
-// Configuração do Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyB3F5mSrXaTrDaUh91Hts1POhzicTM3fEE",
     authDomain: "vistoria-gzl.firebaseapp.com",
@@ -20,7 +19,7 @@ const firebaseConfig = {
     databaseURL: "https://vistoria-gzl-default-rtdb.firebaseio.com/"
 };
 
-// Inicializa o Firebase apenas uma vez
+
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
@@ -28,7 +27,8 @@ if (!firebase.apps.length) {
 const database = firebase.database();
 const auth = firebase.auth();
 
-// Autenticação anônima
+
+
 auth.signInAnonymously()
     .then(() => {
         console.log("Autenticado anonimamente");
@@ -37,18 +37,19 @@ auth.signInAnonymously()
         console.error("Erro na autenticação anônima:", error);
     });
 
-// Restante do seu código permanece igual...
 document.getElementById('vistoriaForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const unidade = document.getElementById('unidade').value;
     const numeroDT = document.getElementById('numeroDT').value;
     const timestamp = new Date().toISOString();
+    const travessa = document.getElementById('travessas').value;
     
     const vistoriasRef = database.ref('vistorias');
     
     const novaVistoria = {
         unidade: unidade,
+        travessa: travessa,
         numeroDT: numeroDT,
         timestamp: timestamp
     };
