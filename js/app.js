@@ -1,13 +1,3 @@
-const allowedHosts = ['github.io'];
-const isAllowedHost = allowedHosts.some(host => window.location.hostname.endsWith(host));
-
-if (!isAllowedHost) {
-    console.error('Acesso não autorizado');
-    document.body.innerHTML = '<h1>Acesso não permitido</h1>';
-    throw new Error('Host não autorizado');
-}
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyB3F5mSrXaTrDaUh91Hts1POhzicTM3fEE",
     authDomain: "vistoria-gzl.firebaseapp.com",
@@ -19,15 +9,12 @@ const firebaseConfig = {
     databaseURL: "https://vistoria-gzl-default-rtdb.firebaseio.com/"
 };
 
-
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
 const database = firebase.database();
 const auth = firebase.auth();
-
-
 
 auth.signInAnonymously()
     .then(() => {
