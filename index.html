@@ -87,6 +87,16 @@
                     <option value="Suzano_Serra">Suzano Serra</option>
                     <option value="Suzano_Cdr_Suzano">Suzano Cdr Suzano</option>
                     <option value="Suzano_Fabrica_B">Suzano Fabrica B</option>
+                    <option value="Suzano_Rio_Verde">Suzano Rio Verde</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="carro">É Sider ? </label>
+                <select id="carro" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
                 </select>
             </div>
 
@@ -96,6 +106,7 @@
                     <option value="" disabled selected>Selecione</option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
+                    <option value="Não é Sider">Não é Sider</option>
                 </select>
             </div>
             
@@ -162,6 +173,7 @@
                                     <p><strong>DT:</strong> ${data.numeroDT}</p>
                                     <p><strong>Unidade:</strong> ${data.unidade.replace(/_/g, ' ')}</p>
                                     <p><strong>Travessas com guidão:</strong> ${data.travessa}</p>
+                                    <p><strong>É Sider:</strong> ${data.carro}</p>
                                     <p><strong>Data/Hora:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
                                 </div>
                             `;

@@ -31,6 +31,7 @@ document.getElementById('vistoriaForm').addEventListener('submit', function(e) {
     const numeroDT = document.getElementById('numeroDT').value;
     const timestamp = new Date().toISOString();
     const travessa = document.getElementById('travessas').value;
+    const carro = document.getElementById('carro').value;
     
     const vistoriasRef = database.ref('vistorias');
     
@@ -38,6 +39,7 @@ document.getElementById('vistoriaForm').addEventListener('submit', function(e) {
         unidade: unidade,
         travessa: travessa,
         numeroDT: numeroDT,
+        carro: carro,
         timestamp: timestamp
     };
     
