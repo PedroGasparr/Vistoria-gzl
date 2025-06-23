@@ -61,6 +61,11 @@
         .result-item:last-child {
             border-bottom: none;
         }
+        
+        /* Adicionei este estilo para esconder o campo travessas inicialmente */
+        .travessas-group {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -93,7 +98,7 @@
 
             <div class="form-group">
                 <label for="carro">Tipo de Veiculo ? </label>
-                <select id="carro" required>
+                <select id="carro" required onchange="toggleTravessasField()">
                     <option value="" disabled selected>Selecione</option>
                     <option value="Sider">Sider</option>
                     <option value="Container">Container</option>
@@ -103,13 +108,12 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group travessas-group" id="travessasGroup">
                 <label for="travessas">As travessas possuem guidão? </label>
-                <select id="travessas" required>
-                    <option value="" disabled selected>Selecione</option>
+                <select id="travessas">
+                    <option value="Não é Sider" selected>Não é Sider</option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
-                    <option value="Não é Sider">Não é Sider</option>
                 </select>
             </div>
             
@@ -175,8 +179,8 @@
                                 <div class="result-item">
                                     <p><strong>DT:</strong> ${data.numeroDT}</p>
                                     <p><strong>Unidade:</strong> ${data.unidade.replace(/_/g, ' ')}</p>
+                                    <p><strong>Tipo de Veículo:</strong> ${data.carro}</p>
                                     <p><strong>Travessas com guidão:</strong> ${data.travessa}</p>
-                                    <p><strong>É Sider:</strong> ${data.carro}</p>
                                     <p><strong>Data/Hora:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
                                 </div>
                             `;
@@ -190,6 +194,27 @@
                     searchResults.innerHTML = `<p>Erro na busca: ${error.message}</p>`;
                 });
         }
+        
+        function toggleTravessasField() {
+            const carroSelect = document.getElementById('carro');
+            const travessasGroup = document.getElementById('travessasGroup');
+            const travessasSelect = document.getElementById('travessas');
+            
+            if (carroSelect.value === 'Sider') {
+                travessasGroup.style.display = 'block';
+                // Define o valor padrão como "Sim" quando Sider é selecionado
+                travessasSelect.value = 'Sim';
+            } else {
+                travessasGroup.style.display = 'none';
+                // Define o valor como "Não é Sider" para outros tipos de veículo
+                travessasSelect.value = 'Não é Sider';
+            }
+        }
+        
+        // Inicializa o campo travessas como escondido
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleTravessasField();
+        });
         
         document.getElementById('searchDT').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
