@@ -62,14 +62,15 @@
             border-bottom: none;
         }
         
-        /* Adicionei este estilo para esconder o campo travessas inicialmente */
-        .travessas-group {
+        .travessas-group,
+        .numero-group,
+        .possui-guidao-group,
+        .linha-vida-group {
             display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Substitua pelo seu logo GZL -->
     <img src="img/GZL - Logos_pages-to-jpg-0001.jpg" alt="GZL Logo" class="logo">
     
     <h2>Formulário de Vistoria</h2>
@@ -97,7 +98,7 @@
             </div>
 
             <div class="form-group">
-                <label for="carro">Tipo de Veiculo ? </label>
+                <label for="carro">Tipo de Veículo:</label>
                 <select id="carro" required onchange="toggleTravessasField()">
                     <option value="" disabled selected>Selecione</option>
                     <option value="Sider">Sider</option>
@@ -109,9 +110,34 @@
             </div>
 
             <div class="form-group travessas-group" id="travessasGroup">
-                <label for="travessas">As travessas possuem guidão? </label>
-                <select id="travessas">
-                    <option value="Não é Sider" selected>Não é Sider</option>
+                <label for="travessas">As Colunas são do tipo Guilhotina?</label>
+                <select id="travessas" onchange="toggleGuidaoFields()">
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="form-group numero-group" id="numeroGroup">
+                <label for="numero">Quantos Guidões possui a coluna?</label>
+                <select id="numero">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+            <div class="form-group possui-guidao-group" id="possuiGuidaoGroup">
+                <label for="possuiGuidao">A coluna possui Guidão?</label>
+                <select id="possuiGuidao">
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="form-group linha-vida-group" id="linhaVidaGroup">
+                <label for="linhaVida">As colunas possuem linha de vida?</label>
+                <select id="linhaVida">
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                 </select>
@@ -140,85 +166,5 @@
     </div>
     
     <script src="js/app.js"></script>
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-        
-        function searchDT() {
-            const dtNumber = document.getElementById('searchDT').value.trim();
-            if (!dtNumber) {
-                alert("Por favor, digite um número de DT para buscar");
-                return;
-            }
-            
-            const searchResults = document.getElementById('searchResults');
-            searchResults.innerHTML = "<p>Buscando...</p>";
-            
-            const vistoriasRef = firebase.database().ref('vistorias');
-            vistoriasRef.orderByChild('numeroDT').equalTo(dtNumber).once('value')
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        let resultsHTML = "";
-                        snapshot.forEach((childSnapshot) => {
-                            const data = childSnapshot.val();
-                            resultsHTML += `
-                                <div class="result-item">
-                                    <p><strong>DT:</strong> ${data.numeroDT}</p>
-                                    <p><strong>Unidade:</strong> ${data.unidade.replace(/_/g, ' ')}</p>
-                                    <p><strong>Tipo de Veículo:</strong> ${data.carro}</p>
-                                    <p><strong>Travessas com guidão:</strong> ${data.travessa}</p>
-                                    <p><strong>Data/Hora:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
-                                </div>
-                            `;
-                        });
-                        searchResults.innerHTML = resultsHTML;
-                    } else {
-                        searchResults.innerHTML = `<p>Nenhum registro encontrado para a DT ${dtNumber}</p>`;
-                    }
-                })
-                .catch((error) => {
-                    searchResults.innerHTML = `<p>Erro na busca: ${error.message}</p>`;
-                });
-        }
-        
-        function toggleTravessasField() {
-            const carroSelect = document.getElementById('carro');
-            const travessasGroup = document.getElementById('travessasGroup');
-            const travessasSelect = document.getElementById('travessas');
-            
-            if (carroSelect.value === 'Sider') {
-                travessasGroup.style.display = 'block';
-                // Define o valor padrão como "Sim" quando Sider é selecionado
-                travessasSelect.value = 'Sim';
-            } else {
-                travessasGroup.style.display = 'none';
-                // Define o valor como "Não é Sider" para outros tipos de veículo
-                travessasSelect.value = 'Não é Sider';
-            }
-        }
-        
-        // Inicializa o campo travessas como escondido
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleTravessasField();
-        });
-        
-        document.getElementById('searchDT').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    </script>
 </body>
 </html>
