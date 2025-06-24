@@ -15,7 +15,7 @@
             background-color: #2b2eff;
             border-radius: 5px 5px 0 0;
         }
-        
+       
         .tab button {
             background-color: inherit;
             float: left;
@@ -25,16 +25,16 @@
             padding: 14px 16px;
             transition: 0.3s;
         }
-        
+       
         .tab button:hover {
             background-color: hsl(0, 3%, 25%);
         }
-        
+       
         .tab button.active {
             background-color: #4CAF50;
             color: rgb(255, 255, 255);
         }
-        
+       
         .tabcontent {
             display: none;
             padding: 20px;
@@ -43,25 +43,25 @@
             border-radius: 0 0 5px 5px;
             animation: fadeEffect 1s;
         }
-        
+       
         @keyframes fadeEffect {
             from {opacity: 0;}
             to {opacity: 1;}
         }
-        
+       
         #searchResults {
             margin-top: 20px;
         }
-        
+       
         .result-item {
             padding: 10px;
             border-bottom: 1px solid #eee;
         }
-        
+       
         .result-item:last-child {
             border-bottom: none;
         }
-        
+       
         .travessas-group,
         .numero-group,
         .possui-guidao-group,
@@ -72,14 +72,14 @@
 </head>
 <body>
     <img src="img/GZL - Logos_pages-to-jpg-0001.jpg" alt="GZL Logo" class="logo">
-    
+   
     <h2>Formulário de Vistoria</h2>
-    
+   
     <div class="tab">
         <button class="tablinks active" onclick="openTab(event, 'cadastroTab')">Cadastrar Vistoria</button>
         <button class="tablinks" onclick="openTab(event, 'buscaTab')">Buscar DT</button>
     </div>
-    
+   
     <!-- Cadastro Tab -->
     <div id="cadastroTab" class="tabcontent" style="display: block;">
         <form id="vistoriaForm">
@@ -97,12 +97,17 @@
                     <option value="Suzano_Suzanlog">Suzano SuzanLog</option>
                 </select>
             </div>
-
+ 
             <div class="form-group">
-                <label for="transportadora">Tipo de Veículo:</label>
+                <label for="transportadora">Transportadora:</label>
                 <input type="text" id="transportadora" required>
             </div>
-
+ 
+            <div class="form-group">
+                <label for="placa">Placa da Carreta:</label>
+                <input type="text" id="placa" required>
+            </div>
+ 
             <div class="form-group">
                 <label for="carro">Tipo de Veículo:</label>
                 <select id="carro" required onchange="toggleTravessasField()">
@@ -114,7 +119,7 @@
                     <option value="Graneleiro">Graneleiro</option>
                 </select>
             </div>
-
+ 
             <div class="form-group travessas-group" id="travessasGroup">
                 <label for="travessas">As Colunas são do tipo Guilhotina?</label>
                 <select id="travessas" onchange="toggleGuidaoFields()">
@@ -123,7 +128,7 @@
                     <option value="Não">Não</option>
                 </select>
             </div>
-
+ 
             <div class="form-group numero-group" id="numeroGroup">
                 <label for="numero">Quantos Guidões possui a coluna?</label>
                 <select id="numero">
@@ -132,7 +137,7 @@
                     <option value="2">2</option>
                 </select>
             </div>
-
+ 
             <div class="form-group possui-guidao-group" id="possuiGuidaoGroup">
                 <label for="possuiGuidao">A coluna possui Guidão?</label>
                 <select id="possuiGuidao">
@@ -140,7 +145,7 @@
                     <option value="Não">Não</option>
                 </select>
             </div>
-
+ 
             <div class="form-group linha-vida-group" id="linhaVidaGroup">
                 <label for="linhaVida">As colunas possuem linha de vida?</label>
                 <select id="linhaVida">
@@ -148,18 +153,18 @@
                     <option value="Não">Não</option>
                 </select>
             </div>
-            
+           
             <div class="form-group">
                 <label for="numeroDT">Número da DT:</label>
                 <input type="text" id="numeroDT" pattern="\d*" title="Apenas números são permitidos" required>
             </div>
-            
+           
             <button type="submit">Salvar</button>
         </form>
-        
+       
         <div id="message" class="success-message"></div>
     </div>
-    
+   
     <!-- Busca Tab -->
     <div id="buscaTab" class="tabcontent">
         <div class="form-group">
@@ -167,10 +172,10 @@
             <input type="text" id="searchDT" pattern="\d*" title="Apenas números são permitidos">
             <button onclick="searchDT()">Buscar</button>
         </div>
-        
+       
         <div id="searchResults"></div>
     </div>
-    
-    <script src="js/app.js"></script>
+   
+    <script src="js/new.js"></script>
 </body>
 </html>

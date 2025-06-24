@@ -15,7 +15,7 @@
             background-color: #2b2eff;
             border-radius: 5px 5px 0 0;
         }
-        
+       
         .tab button {
             background-color: inherit;
             float: left;
@@ -25,16 +25,16 @@
             padding: 14px 16px;
             transition: 0.3s;
         }
-        
+       
         .tab button:hover {
             background-color: hsl(0, 3%, 25%);
         }
-        
+       
         .tab button.active {
             background-color: #4CAF50;
             color: rgb(255, 255, 255);
         }
-        
+       
         .tabcontent {
             display: none;
             padding: 20px;
@@ -43,37 +43,43 @@
             border-radius: 0 0 5px 5px;
             animation: fadeEffect 1s;
         }
-        
+       
         @keyframes fadeEffect {
             from {opacity: 0;}
             to {opacity: 1;}
         }
-        
+       
         #searchResults {
             margin-top: 20px;
         }
-        
+       
         .result-item {
             padding: 10px;
             border-bottom: 1px solid #eee;
         }
-        
+       
         .result-item:last-child {
             border-bottom: none;
+        }
+       
+        .travessas-group,
+        .numero-group,
+        .possui-guidao-group,
+        .linha-vida-group {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Substitua pelo seu logo GZL -->
     <img src="img/GZL - Logos_pages-to-jpg-0001.jpg" alt="GZL Logo" class="logo">
-    
+   
     <h2>Formulário de Vistoria</h2>
-    
+   
     <div class="tab">
         <button class="tablinks active" onclick="openTab(event, 'cadastroTab')">Cadastrar Vistoria</button>
         <button class="tablinks" onclick="openTab(event, 'buscaTab')">Buscar DT</button>
     </div>
-    
+   
     <!-- Cadastro Tab -->
     <div id="cadastroTab" class="tabcontent" style="display: block;">
         <form id="vistoriaForm">
@@ -87,29 +93,78 @@
                     <option value="Suzano_Serra">Suzano Serra</option>
                     <option value="Suzano_Cdr_Suzano">Suzano Cdr Suzano</option>
                     <option value="Suzano_Fabrica_B">Suzano Fabrica B</option>
+                    <option value="Suzano_Rio_Verde">Suzano Rio Verde</option>
+                    <option value="Suzano_Suzanlog">Suzano SuzanLog</option>
                 </select>
             </div>
-
+ 
             <div class="form-group">
-                <label for="travessas">As travessas possuem guidão? </label>
-                <select id="travessas" required>
+                <label for="transportadora">Transportadora:</label>
+                <input type="text" id="transportadora" required>
+            </div>
+ 
+            <div class="form-group">
+                <label for="placa">Placa da Carreta:</label>
+                <input type="text" id="placa" required>
+            </div>
+ 
+            <div class="form-group">
+                <label for="carro">Tipo de Veículo:</label>
+                <select id="carro" required onchange="toggleTravessasField()">
                     <option value="" disabled selected>Selecione</option>
+                    <option value="Sider">Sider</option>
+                    <option value="Container">Container</option>
+                    <option value="Grade Baixa">Grade Baixa</option>
+                    <option value="Grade Alta">Grade Alta</option>
+                    <option value="Graneleiro">Graneleiro</option>
+                </select>
+            </div>
+ 
+            <div class="form-group travessas-group" id="travessasGroup">
+                <label for="travessas">As Colunas são do tipo Guilhotina?</label>
+                <select id="travessas" onchange="toggleGuidaoFields()">
+                    <option value="" disabled selected>Selecione uma opção</option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                 </select>
             </div>
-            
+ 
+            <div class="form-group numero-group" id="numeroGroup">
+                <label for="numero">Quantos Guidões possui a coluna?</label>
+                <select id="numero">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+ 
+            <div class="form-group possui-guidao-group" id="possuiGuidaoGroup">
+                <label for="possuiGuidao">A coluna possui Guidão?</label>
+                <select id="possuiGuidao">
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+ 
+            <div class="form-group linha-vida-group" id="linhaVidaGroup">
+                <label for="linhaVida">As colunas possuem linha de vida?</label>
+                <select id="linhaVida">
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+           
             <div class="form-group">
                 <label for="numeroDT">Número da DT:</label>
                 <input type="text" id="numeroDT" pattern="\d*" title="Apenas números são permitidos" required>
             </div>
-            
+           
             <button type="submit">Salvar</button>
         </form>
-        
+       
         <div id="message" class="success-message"></div>
     </div>
-    
+   
     <!-- Busca Tab -->
     <div id="buscaTab" class="tabcontent">
         <div class="form-group">
@@ -117,68 +172,10 @@
             <input type="text" id="searchDT" pattern="\d*" title="Apenas números são permitidos">
             <button onclick="searchDT()">Buscar</button>
         </div>
-        
+       
         <div id="searchResults"></div>
     </div>
-    
+   
     <script src="js/app.js"></script>
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-        
-        function searchDT() {
-            const dtNumber = document.getElementById('searchDT').value.trim();
-            if (!dtNumber) {
-                alert("Por favor, digite um número de DT para buscar");
-                return;
-            }
-            
-            const searchResults = document.getElementById('searchResults');
-            searchResults.innerHTML = "<p>Buscando...</p>";
-            
-            const vistoriasRef = firebase.database().ref('vistorias');
-            vistoriasRef.orderByChild('numeroDT').equalTo(dtNumber).once('value')
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        let resultsHTML = "";
-                        snapshot.forEach((childSnapshot) => {
-                            const data = childSnapshot.val();
-                            resultsHTML += `
-                                <div class="result-item">
-                                    <p><strong>DT:</strong> ${data.numeroDT}</p>
-                                    <p><strong>Unidade:</strong> ${data.unidade.replace(/_/g, ' ')}</p>
-                                    <p><strong>Travessas com guidão:</strong> ${data.travessa}</p>
-                                    <p><strong>Data/Hora:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
-                                </div>
-                            `;
-                        });
-                        searchResults.innerHTML = resultsHTML;
-                    } else {
-                        searchResults.innerHTML = `<p>Nenhum registro encontrado para a DT ${dtNumber}</p>`;
-                    }
-                })
-                .catch((error) => {
-                    searchResults.innerHTML = `<p>Erro na busca: ${error.message}</p>`;
-                });
-        }
-        
-        document.getElementById('searchDT').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    </script>
 </body>
 </html>
